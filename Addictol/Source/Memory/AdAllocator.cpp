@@ -50,26 +50,40 @@ namespace Addictol
 				return lpBlock;
 
 			//  https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex
-			//  Sample output:
-			//  OUT OF MEMORY. A memory allocation failed.
-			//  
-			//  Requested chunk size: 123456 bytes.
-			//  There is     51 percent of memory in use.
-			//  There are 20.29 total GB of physical memory.
-			//  There are  9.87 free  GB of physical memory.
-			//  There are 38.84 total GB of paging file.
-			//  There are 27.99 free  GB of paging file.
-			AdAssertWithFormattedMessage(lpBlock,
-				"OUT OF MEMORY. A memory allocation failed.\n\n"
-				"Requested chunk size: %llu bytes.\n"
-				"There is %ld percent of memory in use.\n"
-				"There are %.2f total GB of physical memory.\n"
-				"There are %.2f free GB of physical memory.\n"
-				"There are %.2f total GB of paging file.\n"
-				"There are %.2f free GB of paging file.\n",
-				nSize, statex.dwMemoryLoad,
-				(long double)statex.ullTotalPhys / AD_DIV,		(long double)statex.ullAvailPhys / AD_DIV,
-				(long double)statex.ullTotalPageFile / AD_DIV,	(long double)statex.ullAvailPageFile / AD_DIV);
+				//  Sample output:
+				//  OUT OF MEMORY. A memory allocation failed.
+				//  
+				//  Requested chunk size: 123456 bytes.
+				//  There is     51 percent of memory in use.
+				//  There are 20.29 total GB of physical memory.
+				//  There are  9.87 free  GB of physical memory.
+				//  There are 38.84 total GB of paging file.
+				//  There are 27.99 free  GB of paging file.
+
+			if (nSize >= static_cast<size_t>(std::numeric_limits<int32_t>::max()))
+				AdAssertWithFormattedMessage(lpBlock,
+					"BIG REQUESTED SIZE. A memory allocation failed, maybe memory leaks.\nUse Telemtry to find out the problematic mod.\n\n"
+					"Requested chunk size: %.2f GB.\n"
+					"There is %ld percent of memory in use.\n"
+					"There are %.2f total GB of physical memory.\n"
+					"There are %.2f free GB of physical memory.\n"
+					"There are %.2f total GB of paging file.\n"
+					"There are %.2f free GB of paging file.\n",
+					(long double)nSize / AD_DIV , statex.dwMemoryLoad,
+					(long double)statex.ullTotalPhys / AD_DIV, (long double)statex.ullAvailPhys / AD_DIV,
+					(long double)statex.ullTotalPageFile / AD_DIV, (long double)statex.ullAvailPageFile / AD_DIV);
+			else
+				AdAssertWithFormattedMessage(lpBlock,
+					"OUT OF MEMORY. A memory allocation failed.\n\n"
+					"Requested chunk size: %llu bytes.\n"
+					"There is %ld percent of memory in use.\n"
+					"There are %.2f total GB of physical memory.\n"
+					"There are %.2f free GB of physical memory.\n"
+					"There are %.2f total GB of paging file.\n"
+					"There are %.2f free GB of paging file.\n",
+					nSize, statex.dwMemoryLoad,
+					(long double)statex.ullTotalPhys / AD_DIV, (long double)statex.ullAvailPhys / AD_DIV,
+					(long double)statex.ullTotalPageFile / AD_DIV, (long double)statex.ullAvailPageFile / AD_DIV);
 		}
 
 		return lpBlock;
