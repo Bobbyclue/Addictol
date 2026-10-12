@@ -62,7 +62,7 @@ namespace Addictol
 
 			if (nSize >= static_cast<size_t>(std::numeric_limits<int32_t>::max()))
 				AdAssertWithFormattedMessage(lpBlock,
-					"BIG REQUESTED SIZE. A memory allocation failed, maybe memory leaks.\nUse Telemtry to find out the problematic mod.\n\n"
+					"BIG REQUESTED SIZE. A memory allocation failed, maybe memory leaks.\nUse Telemetry to find out the problematic mod.\n\n"
 					"Requested chunk size: %.2f GB.\n"
 					"There is %ld percent of memory in use.\n"
 					"There are %.2f total GB of physical memory.\n"
