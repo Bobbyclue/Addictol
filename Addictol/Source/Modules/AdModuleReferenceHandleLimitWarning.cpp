@@ -82,7 +82,8 @@ namespace Addictol
 		// Saves game and quit
 
 		auto manager = RE::BGSSaveLoadManager::GetSingleton();
-		if (manager && !againReport_OutOfEntries_ReferenceHandleLimit.load())
+		// Every failed CreateHandle lands here, possibly on several threads at once.
+		if (manager && !againReport_OutOfEntries_ReferenceHandleLimit.exchange(true))
 		{
 			REX::ERROR("OUT OF HANDLE ARRAY ENTRIES! SAVES GAME AND QUIT FORCIBLY!");
 			manager->QueueSaveLoadTask(RE::BGSSaveLoadManager::QUEUED_TASK::kSaveAndQuitToDesktop);

@@ -64,8 +64,9 @@ namespace Addictol
 
 			void ApplyInclination(RE::NiPoint3& a_translate) const noexcept
 			{
-				a_translate.y = a_translate.y * cosInclinationTheta - a_translate.x * sinInclinationTheta;
-				a_translate.x = a_translate.y * sinInclinationTheta + a_translate.x * cosInclinationTheta;
+				const auto y = a_translate.y;
+				a_translate.y = y * cosInclinationTheta - a_translate.x * sinInclinationTheta;
+				a_translate.x = y * sinInclinationTheta + a_translate.x * cosInclinationTheta;
 			}
 		};
 

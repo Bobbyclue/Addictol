@@ -7,6 +7,7 @@
 - FasterWorkshop: Fixed the Workshop Icon Lag Hook for NG.
 - LeveledListCrash: Fixed an issue where the module did not catch overflows.
 - MaxPapyrusOps: Fixed an incorrect offset being used for OG/NG.
+- ReferenceHandleLimit: Queue the save-and-quit only once when reference handles run out.
 - ThirdPersonSpeedMult: Reworked from SprintSpeedMult and enabled by default, apply SpeedMult to third-person sprint and sneak on vanilla behavior graphs.
 
 ## 1.7.1
