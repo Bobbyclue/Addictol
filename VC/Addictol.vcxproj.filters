@@ -290,6 +290,9 @@
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleMoonRotation.cpp">
       <Filter>Source\Modules\M</Filter>
     </ClCompile>
+    <ClCompile Include="..\Addictol\Source\Modules\AdModuleNeverFadesSpotlight.cpp">
+      <Filter>Source\Modules\N</Filter>
+    </ClCompile>
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleMovementPlanner.cpp">
       <Filter>Source\Modules\M</Filter>
     </ClCompile>
@@ -709,6 +712,9 @@
     </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleMoonRotation.h">
       <Filter>Include\Modules\M</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Addictol\Include\Modules\AdModuleNeverFadesSpotlight.h">
+      <Filter>Include\Modules\N</Filter>
     </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleMovementPlanner.h">
       <Filter>Include\Modules\M</Filter>

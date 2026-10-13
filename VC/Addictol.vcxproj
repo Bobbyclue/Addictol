@@ -71,6 +71,7 @@
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleSprintStutter.cpp" />
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleThirdPersonSpeedMult.cpp" />
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleMoonRotation.cpp" />
+    <ClCompile Include="..\Addictol\Source\Modules\AdModuleNeverFadesSpotlight.cpp" />
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleAIProcess3DUpdateFlag.cpp" />
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleSaveCompression.cpp" />
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleDpiScaling.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleSprintStutter.h" />
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleThirdPersonSpeedMult.h" />
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleMoonRotation.h" />
+    <ClInclude Include="..\Addictol\Include\Modules\AdModuleNeverFadesSpotlight.h" />
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleAIProcess3DUpdateFlag.h" />
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleSaveCompression.h" />
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleDpiScaling.h" />

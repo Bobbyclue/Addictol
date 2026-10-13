@@ -78,6 +78,7 @@
 #include <Modules/AdModuleSprintStutter.h>
 #include <Modules/AdModuleThirdPersonSpeedMult.h>
 #include <Modules/AdModuleMoonRotation.h>
+#include <Modules/AdModuleNeverFadesSpotlight.h>
 #include <Modules/AdModuleCrashRemoveRef.h>
 #include <Modules/AdModuleClimateLoad.h>
 #include <Modules/AdModuleMusicOverlap.h>
@@ -187,6 +188,7 @@ static auto sModuleDownwardAiming					= std::make_shared<Addictol::ModuleDownwar
 static auto sModuleSprintStutter					= std::make_shared<Addictol::ModuleSprintStutter>();
 static auto sModuleThirdPersonSpeedMult				= std::make_shared<Addictol::ModuleThirdPersonSpeedMult>();
 static auto sModuleMoonRotation						= std::make_shared<Addictol::ModuleMoonRotation>();
+static auto sModuleNeverFadesSpotlight				= std::make_shared<Addictol::ModuleNeverFadesSpotlight>();
 static auto sModuleCrashRemoveRef					= std::make_shared<Addictol::ModuleCrashRemoveRef>();
 static auto sModuleClimateLoadFix					= std::make_shared<Addictol::ModuleClimateLoadFix>();
 static auto sModuleMusicOverlap						= std::make_shared<Addictol::ModuleMusicOverlap>();
@@ -300,6 +302,7 @@ void AdRegisterModules()
 	modules.Register(sModuleDownwardAiming);
 	modules.Register(sModuleSprintStutter);
 	modules.Register(sModuleMoonRotation);
+	modules.Register(sModuleNeverFadesSpotlight);
 	modules.Register(sModuleCrashRemoveRef);
 	modules.Register(sModuleClimateLoadFix);
 	modules.Register(sModuleMusicOverlap);

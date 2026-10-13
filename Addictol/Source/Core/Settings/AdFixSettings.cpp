@@ -581,6 +581,15 @@ namespace Addictol
 		SettingApplyTiming::kNextLaunch
 	};
 
+	BoolSetting bFixesNeverFadesSpotlight{
+		"Fixes"sv,
+		"bNeverFadesSpotlight"sv,
+		SettingDisplayCategory::kVisuals,
+		true,
+		"Fixes shadow-casting spotlights marked Never Fades being culled instead of skipping the distance check."sv,
+		SettingApplyTiming::kNextLaunch
+	};
+
 	BoolSetting bFixesRadioSilence{
 		"Fixes"sv,
 		"bFixesRadioSilence"sv,

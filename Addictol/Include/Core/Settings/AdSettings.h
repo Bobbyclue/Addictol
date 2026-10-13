@@ -79,6 +79,7 @@ namespace Addictol
 	extern BoolSetting bFixesSprintStutter;
 	extern BoolSetting bFixesThirdPersonSpeedMult;
 	extern BoolSetting bFixesMoonRotation;
+	extern BoolSetting bFixesNeverFadesSpotlight;
 	extern BoolSetting bCrashRemoveRefFix;
 	extern BoolSetting bClimateLoad;
 	extern BoolSetting bFixesMusicOverlap;
