@@ -228,7 +228,7 @@ namespace vmm_tests
 			const auto& boolean =
 				Setting("Additional", "bIgnoreCompatibilityChecks");
 			const auto& floating = Setting("Additional", "fLocalMapScaleFactor");
-			const auto& signedInteger = Setting("Additional", "nQuitGameDelayMs");
+			const auto& signedInteger = Setting("Additional", "nMaxPapyrusOpsPerFrame");
 			const auto& unsignedInteger = Setting("Additional", "uMenuRefreshMs");
 			const auto& string = Setting("Additional", "sAllocator");
 			const std::string quoted{ "F\"11\\path\nnext" };
@@ -267,7 +267,7 @@ namespace vmm_tests
 				toml::find<int64_t>(
 					root,
 					"Additional",
-					"nQuitGameDelayMs") == 1234,
+					"nMaxPapyrusOpsPerFrame") == 1234,
 				"signed integer did not round trip");
 			require(
 				toml::find<int64_t>(
@@ -854,10 +854,10 @@ namespace vmm_tests
 
 			auto& repository = Addictol::SettingsRepository::GetSingleton();
 			auto snapshot = repository.Snapshot();
-			SnapshotSetting(snapshot, "Additional", "nQuitGameDelayMs").value = int64_t{ 1375 };
+			SnapshotSetting(snapshot, "Additional", "nMaxPapyrusOpsPerFrame").value = int64_t{ 1375 };
 			require(repository.Apply(snapshot).success, "Apply to the selected custom file failed");
 			require(
-				toml::find<int>(toml::parse_str(ReadText(customPath)), "Additional", "nQuitGameDelayMs") == 1375 &&
+				toml::find<int>(toml::parse_str(ReadText(customPath)), "Additional", "nMaxPapyrusOpsPerFrame") == 1375 &&
 					ReadText(settingsPath) == baseContents,
 				"repository did not write the active custom file");
 			WriteText(
@@ -897,29 +897,29 @@ namespace vmm_tests
 			auto& immediate = SnapshotSetting(
 				values,
 				"Additional",
-				"nQuitGameDelayMs");
+				"fLocalMapScaleFactor");
 			auto& nextLaunch = SnapshotSetting(
 				values,
 				"Patches",
 				"bArchiveLimits");
-			immediate.value = int64_t{ 1375 };
+			immediate.value = 2.25;
 			nextLaunch.value = false;
 
 			const auto firstApply = repository.Apply(values);
 			require(firstApply.success, "settings Apply failed: " + firstApply.error);
 			require(firstApply.changed == 2, "settings Apply reported the wrong change count");
 			require(
-				std::get<int64_t>(immediate.setting->Value()) == 1375,
+				std::get<double>(immediate.setting->Value()) == 2.25,
 				"immediate setting did not update during Apply");
 			require(
 				std::get<bool>(nextLaunch.setting->Value()),
 				"next-launch setting changed before reload");
 			auto root = toml::parse_str(ReadText(settingsPath));
 			require(
-				toml::find<int64_t>(
+				toml::find<double>(
 					root,
 					"Additional",
-					"nQuitGameDelayMs") == 1375 &&
+					"fLocalMapScaleFactor") == 2.25 &&
 					!toml::find<bool>(
 						root,
 						"Patches",
@@ -940,7 +940,7 @@ namespace vmm_tests
 			const auto resetApply = repository.Apply(resetCommit.values);
 			require(resetApply.success, "reset Apply failed: " + resetApply.error);
 			require(
-				std::get<int64_t>(immediate.setting->Value()) == 1000,
+				immediate.setting->Value() == immediate.setting->DefaultValue(),
 				"reset did not update the immediate setting");
 			require(
 				!std::get<bool>(nextLaunch.setting->Value()),
@@ -948,7 +948,7 @@ namespace vmm_tests
 			const auto resetText = ReadText(settingsPath);
 			root = toml::parse_str(resetText);
 			require(
-				!toml::find(root, "Additional").contains("nQuitGameDelayMs") &&
+				!toml::find(root, "Additional").contains("fLocalMapScaleFactor") &&
 					!toml::find(root, "Patches").contains("bArchiveLimits"),
 				"reset left factory-valued assignments active");
 			require(

@@ -115,15 +115,6 @@ namespace Addictol
 		SettingApplyTiming::kNextLaunch
 	};
 
-	I32Setting nAdditionalQuitGameDelayMs{
-		"Additional"sv,
-		"nQuitGameDelayMs"sv,
-		SettingDisplayCategory::kStability,
-		1000,
-		"Delay (ms) before the deferred quit-to-desktop flag is set. Lets the UI/menu unwind so cleanup can't deadlock (needs bSafeExit)."sv,
-		SettingApplyTiming::kImmediate
-	};
-
 	I32Setting nAdditionalBloomScale{
 		"Additional"sv,
 		"nBloomScale"sv,

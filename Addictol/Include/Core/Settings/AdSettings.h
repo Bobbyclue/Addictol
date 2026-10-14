@@ -122,7 +122,6 @@ namespace Addictol
 	extern BoolSetting bAdditionalFullPrecisionDecalsEffectShaders;
 	extern I32Setting nAdditionalMaxPapyrusOpsPerFrame;
 	extern BoolSetting bAdditionalIgnorePreInstallBias;
-	extern I32Setting nAdditionalQuitGameDelayMs;
 	extern I32Setting nAdditionalBloomScale;
 	extern BoolSetting bAdditionalIgnoreCompatibilityChecks;
 	extern F32Setting fAdditionalLocalMapScaleFactor;
