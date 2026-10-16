@@ -332,6 +332,9 @@
     <ClCompile Include="..\Addictol\Source\Modules\AdModulePuddleCubemaps.cpp">
       <Filter>Source\Modules\P</Filter>
     </ClCompile>
+    <ClCompile Include="..\Addictol\Source\Modules\AdModuleQuestLogBloat.cpp">
+      <Filter>Source\Modules\Q</Filter>
+    </ClCompile>
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleRadioSilence.cpp">
       <Filter>Source\Modules\R</Filter>
     </ClCompile>
@@ -755,6 +758,9 @@
     <ClInclude Include="..\Addictol\Include\Modules\AdModulePuddleCubemaps.h">
       <Filter>Include\Modules\P</Filter>
     </ClInclude>
+    <ClInclude Include="..\Addictol\Include\Modules\AdModuleQuestLogBloat.h">
+      <Filter>Include\Modules\Q</Filter>
+    </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleRadioSilence.h">
       <Filter>Include\Modules\R</Filter>
     </ClInclude>
@@ -955,6 +961,9 @@
     <Filter Include="Source\Modules\P">
       <UniqueIdentifier>{ce084078-3a41-4d40-b54a-7b327199e685}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Modules\Q">
+      <UniqueIdentifier>{4f2d8b1a-6c3e-4a97-b5d0-8e1f7a2c9d36}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Modules\R">
       <UniqueIdentifier>{18837673-37ea-4dc9-b0d4-162b00db76ce}</UniqueIdentifier>
     </Filter>
@@ -1011,6 +1020,9 @@
     </Filter>
     <Filter Include="Include\Modules\P">
       <UniqueIdentifier>{020887d5-4a7a-44fc-9980-b9786a7f611a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Modules\Q">
+      <UniqueIdentifier>{a83e5c27-9d14-4b6f-8c02-3f7e1d5b6a94}</UniqueIdentifier>
     </Filter>
     <Filter Include="Include\Modules\R">
       <UniqueIdentifier>{78ca4348-9163-482e-ba8e-0f85ff3c6931}</UniqueIdentifier>

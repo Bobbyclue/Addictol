@@ -98,6 +98,7 @@
 #include <Modules/AdModuleArmorPenetration.h>
 #include <Modules/AdModuleLocalMapRotation.h>
 #include <Modules/AdModuleRadioSilence.h>
+#include <Modules/AdModuleQuestLogBloat.h>
 
 namespace
 {
@@ -208,6 +209,7 @@ static auto sModuleNPCHealthOverflowFix				= std::make_shared<Addictol::ModuleNP
 static auto sModuleArmorPenetration					= std::make_shared<Addictol::ModuleArmorPenetration>();
 static auto sModuleLocalMapRotation					= std::make_shared<Addictol::ModuleLocalMapRotation>();
 static auto sModuleRadioSilence						= std::make_shared<Addictol::ModuleRadioSilence>();
+static auto sModuleQuestLogBloat					= std::make_shared<Addictol::ModuleQuestLogBloat>();
 
 void AdRegisterPreloadModules()
 {
@@ -315,6 +317,7 @@ void AdRegisterModules()
 	modules.Register(sModuleHighResLocalMaps);
 	modules.Register(sModuleLocalMapRotation);
 	modules.Register(sModuleRadioSilence);
+	modules.Register(sModuleQuestLogBloat);
 
 	// Registers other patches
 	modules.Register(sModuleThreads,						kGameDataReady);

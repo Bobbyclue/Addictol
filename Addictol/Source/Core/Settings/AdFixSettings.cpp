@@ -598,4 +598,13 @@ namespace Addictol
 		"[EXPERIMENTAL] Fixes an issue where Radio Signals can go silent after some time."sv,
 		SettingApplyTiming::kNextLaunch
 	};
+
+	BoolSetting bFixesQuestLogBloat{
+		"Fixes"sv,
+		"bQuestLogBloat"sv,
+		SettingDisplayCategory::kPerformance,
+		true,
+		"Prevents repeatable quest stages from appending duplicate quest log nodes and deduplicates bloated quest logs on save load."sv,
+		SettingApplyTiming::kNextLaunch
+	};
 }

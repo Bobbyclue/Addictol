@@ -94,6 +94,7 @@ namespace Addictol
 	extern BoolSetting bFixesArmorPenetration;
 	extern BoolSetting bFixesLocalMapRotation;
 	extern BoolSetting bFixesRadioSilence;
+	extern BoolSetting bFixesQuestLogBloat;
 
 	extern BoolSetting bWarningsImageSpaceAdapter;
 	extern BoolSetting bWarningsDuplicateAddonNodeIndex;
