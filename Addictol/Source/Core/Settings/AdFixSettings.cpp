@@ -36,7 +36,7 @@ namespace Addictol
 		"bLODDistance"sv,
 		SettingDisplayCategory::kPerformance,
 		true,
-		"Fixes bugs when toggling references with LOD causing LOD to briefly enable and disable by removing the \"Has Distant LOD\" and \"Visible When Distant\" flag checks: https://www.youtube.com/watch?v=hgMm9Z8lHfU."sv,
+		"Fixes a loaded cell's distant object LOD briefly reappearing when a reference with distant LOD is enabled or built."sv,
 		SettingApplyTiming::kNextLaunch
 	};
 

@@ -11,6 +11,7 @@
 - MaxPapyrusOps: Fixed an incorrect offset being used for OG/NG.
 - ReferenceHandleLimit: Queue the save-and-quit only once when reference handles run out.
 - SafeExit: Save Fallout4Prefs.ini on exit and quit to desktop immediately; removed nQuitGameDelayMs.
+- LODDistance: Fixed cell object LOD flashing when references are enabled or built; no longer alters weapon mod filtering on NG/AE.
 - ThirdPersonSpeedMult: Reworked from SprintSpeedMult and enabled by default, apply SpeedMult to third-person sprint and sneak on vanilla behavior graphs.
 
 ## 1.7.1
