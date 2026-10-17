@@ -293,6 +293,12 @@
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleNeverFadesSpotlight.cpp">
       <Filter>Source\Modules\N</Filter>
     </ClCompile>
+    <ClCompile Include="..\Addictol\Source\Modules\AdModuleLightOrder.cpp">
+      <Filter>Source\Modules\L</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Addictol\Source\Modules\AdModuleLightPriority.cpp">
+      <Filter>Source\Modules\L</Filter>
+    </ClCompile>
     <ClCompile Include="..\Addictol\Source\Modules\AdModuleMovementPlanner.cpp">
       <Filter>Source\Modules\M</Filter>
     </ClCompile>
@@ -718,6 +724,12 @@
     </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleNeverFadesSpotlight.h">
       <Filter>Include\Modules\N</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Addictol\Include\Modules\AdModuleLightOrder.h">
+      <Filter>Include\Modules\L</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Addictol\Include\Modules\AdModuleLightPriority.h">
+      <Filter>Include\Modules\L</Filter>
     </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleMovementPlanner.h">
       <Filter>Include\Modules\M</Filter>

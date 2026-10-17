@@ -590,6 +590,24 @@ namespace Addictol
 		SettingApplyTiming::kNextLaunch
 	};
 
+	BoolSetting bFixesLightOrder{
+		"Fixes"sv,
+		"bLightOrder"sv,
+		SettingDisplayCategory::kVisuals,
+		true,
+		"Fixes previs discarding object light lists, which left glass and other objects lit only by the sun."sv,
+		SettingApplyTiming::kNextLaunch
+	};
+
+	BoolSetting bFixesLightPriority{
+		"Fixes"sv,
+		"bLightPriority"sv,
+		SettingDisplayCategory::kVisuals,
+		true,
+		"Fixes objects lit by more than four lights receiving the four weakest instead of the four strongest."sv,
+		SettingApplyTiming::kNextLaunch
+	};
+
 	BoolSetting bFixesRadioSilence{
 		"Fixes"sv,
 		"bFixesRadioSilence"sv,

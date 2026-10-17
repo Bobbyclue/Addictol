@@ -99,6 +99,8 @@
 #include <Modules/AdModuleLocalMapRotation.h>
 #include <Modules/AdModuleRadioSilence.h>
 #include <Modules/AdModuleQuestLogBloat.h>
+#include <Modules/AdModuleLightOrder.h>
+#include <Modules/AdModuleLightPriority.h>
 
 namespace
 {
@@ -210,6 +212,8 @@ static auto sModuleArmorPenetration					= std::make_shared<Addictol::ModuleArmor
 static auto sModuleLocalMapRotation					= std::make_shared<Addictol::ModuleLocalMapRotation>();
 static auto sModuleRadioSilence						= std::make_shared<Addictol::ModuleRadioSilence>();
 static auto sModuleQuestLogBloat					= std::make_shared<Addictol::ModuleQuestLogBloat>();
+static auto sModuleLightOrder						= std::make_shared<Addictol::ModuleLightOrder>();
+static auto sModuleLightPriority					= std::make_shared<Addictol::ModuleLightPriority>();
 
 void AdRegisterPreloadModules()
 {
@@ -318,6 +322,8 @@ void AdRegisterModules()
 	modules.Register(sModuleLocalMapRotation);
 	modules.Register(sModuleRadioSilence);
 	modules.Register(sModuleQuestLogBloat);
+	modules.Register(sModuleLightOrder);
+	modules.Register(sModuleLightPriority);
 
 	// Registers other patches
 	modules.Register(sModuleThreads,						kGameDataReady);
