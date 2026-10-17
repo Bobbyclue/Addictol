@@ -34,7 +34,7 @@ namespace Addictol
 			// Degrees the moon rotates in exactly 1 hour (~50 min later every day)
 			const double DEGREES_PER_HOUR = 14.5;
 
-			// The Moon's orbit is tilted at approximately 5.14� relative to Earth's orbital plane (the ecliptic)
+			// The Moon's orbit is tilted at approximately 5.14° relative to Earth's orbital plane (the ecliptic)
 			const float DEGREES_INCLINATION = 5.14f;
 
 			const float cosInclinationTheta{ std::cosf(static_cast<float>(Deg2Rad(DEGREES_INCLINATION))) };
@@ -44,7 +44,7 @@ namespace Addictol
 
 			double CalculateRotationDeg(double a_hours, bool a_clampTo360 = true) const noexcept
 			{
-				// 1 day (It was visible, added to 90�)
+				// 1 day (It was visible, added to 90°)
 				double totalDegrees = a_hours * DEGREES_PER_HOUR + 90.0f;
 
 				if (a_clampTo360)
@@ -97,7 +97,7 @@ namespace Addictol
 				// Let's move it to the south, since Boston is north of the equator.
 				root->local.translate.y = -325.f;
 
-				// Apply inclination tilted at approximately 5.14� relative to Earth's orbital plane.
+				// Apply inclination tilted at approximately 5.14° relative to Earth's orbital plane.
 				calc.ApplyInclination(root->local.translate);
 
 				// The moon will be bigger at moonrise and moonset.
@@ -152,12 +152,12 @@ namespace Addictol
 			const auto * climate = a_sky->currentClimate;
 			if (!climate)
 				return 1.f;
-			
+
 			constexpr float kHour = 0.16666667f;
 			const auto time = [](std::uint8_t a_value) noexcept {
 				return static_cast<float>(a_value) * kHour;
 			};
-			
+
 			const float half		= fSunAlphaTransTime * 0.5f;
 			const float sunrise		= (time(climate->sunriseEnd) + time(climate->sunriseBegin)) * 0.5f;
 			const float sunset		= (time(climate->sunsetEnd) + time(climate->sunsetBegin)) * 0.5f;
@@ -166,7 +166,7 @@ namespace Addictol
 			const float setBegin	= sunset - half;
 			const float setEnd		= sunset + half;
 			const float hour		= a_sky->currentGameHour;
-			
+
 			if (riseBegin > hour || hour > setEnd)
 				return 0.f;
 			if (riseBegin >= hour || hour >= riseEnd)
@@ -207,7 +207,7 @@ namespace Addictol
 			moonDir.Normalize();
 
 			auto& row = light->local.rotate.entry[0];
-			
+
 			RE::NiPoint3 direction
 			{
 				row.x + (moonDir.x - row.x) * night,
@@ -218,7 +218,7 @@ namespace Addictol
 
 			if (direction == RE::NiPoint3::ZERO)
 				direction = moonDir;
-	
+
 			row.x = direction.x;
 			row.y = direction.y;
 			row.z = direction.z;
