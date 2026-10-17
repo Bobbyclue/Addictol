@@ -183,10 +183,9 @@ namespace Addictol
 	}
 
 	// Shared first-load startup; settings must load before anything reads them.
-	static void InitializeStartup(const REL::Version& a_gameVersion) noexcept
+	static void InitializeStartup() noexcept
 	{
-		REX::INFO("" _PluginName " mod (ver: " VER_FILE_VERSION_STR ") Initializing..."sv);
-		REX::INFO("Game version: {}.{}.{}.{}"sv, a_gameVersion.major(), a_gameVersion.minor(), a_gameVersion.patch(), a_gameVersion.build());
+		REX::INFO("" _PluginName " Initializing..."sv);
 
 		InitializeSettings();
 		LogControl::Install();
@@ -212,7 +211,7 @@ namespace Addictol
 			F4SE::Init(a_f4se);
 
 			if (!isPreloadInit)
-				InitializeStartup(a_f4se->RuntimeVersion());
+				InitializeStartup();
 
 			// Register all modules
 			AdRegisterModules();
@@ -256,7 +255,7 @@ namespace Addictol
 			// Preload Init
 			F4SE::Init(a_preloadf4se);
 
-			InitializeStartup(a_preloadf4se->RuntimeVersion());
+			InitializeStartup();
 
 			// Register preload all modules
 			AdRegisterPreloadModules();
