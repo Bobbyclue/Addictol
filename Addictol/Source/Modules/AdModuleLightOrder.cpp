@@ -242,8 +242,7 @@ namespace Addictol
 		// ShadowSceneNode::UpdateQueuedLight: OG 0x2810960, NG 0x205DA80, AE 0x21BAC20.
 		const auto update = RE::ID::ShadowSceneNode::UpdateQueuedLight.address();
 		// BSLight::AddFadeNodeLocked: OG 0x285B860, NG 0x20A0F70, AE 0x21FE110.
-		// CommonLibF4's ID::BSLight swaps AddFadeNode/AddFadeNodeLocked on AE.
-		const auto add = REL::ID{ 1210164, 2318420 }.address();
+		const auto add = RE::ID::BSLight::AddFadeNodeLocked.address();
 		// BSPreCulledObjects::QEnabled: OG 0x2809E30, NG 0x2051380, AE 0x21AE520.
 		const auto qEnabled = RE::ID::BSPreCulledObjects::QEnabled.address();
 
