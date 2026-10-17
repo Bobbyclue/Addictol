@@ -79,15 +79,6 @@ namespace Addictol
 		SettingNumericRange{ 2048.0, 8192.0 }
 	};
 
-	BoolSetting bAdditionalMultiThreading{
-		"Additional"sv,
-		"bInteriorNavCutMultiThreading"sv,
-		SettingDisplayCategory::kPerformance,
-		true,
-		"Enable InteriorNavCut MultiThreading, automatically disabled on Linux / Proton (needs bInteriorNavCut)."sv,
-		SettingApplyTiming::kNextLaunch
-	};
-
 	BoolSetting bAdditionalFullPrecisionDecalsEffectShaders{
 		"Additional"sv,
 		"bFullPrecisionDecalsEffectShaders"sv,

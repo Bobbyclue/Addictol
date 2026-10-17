@@ -2,208 +2,97 @@
 #include <Core/AdUtils.h>
 
 #include <RE/B/BGSEncounterZone.h>
+#include <RE/D/DynamicNavmesh.h>
 #include <RE/P/PlayerCharacter.h>
 #include <RE/T/TESCellAttachDetachEvent.h>
+#include <RE/T/TESDataHandler.h>
 #include <RE/T/TESObjectCELL.h>
 #include <RE/T/TESObjectREFR.h>
-
-#include <ppl.h>
-#include <Windows.h>
-
-#define AD_NOMESSAGE_INTERIORNAVCUT 1
+#include <RE/W/Workshop.h>
 
 namespace Addictol
 {
-	// ---- RE Functions ---- //
-
-	inline bool IsWorkshopItem(const RE::TESObjectREFR* a_refr)
+	// Interior detach keeps workshop navmesh cuts, so they cut every interior.
+	namespace interiorNavCutDetail
 	{
-		using func_t = decltype(&IsWorkshopItem);
-		static REL::Relocation<func_t> func{ REL::ID{ 1386903, 2194912 } };
-		return func(a_refr);
-	}
-
-	class DynamicNavmesh
-	{
-	public:
-		static DynamicNavmesh* GetSingleton()
+		[[nodiscard]] static bool UpdateNavmeshCut(RE::TESObjectREFR& a_ref, bool a_attached)
 		{
-			REL::Relocation<DynamicNavmesh**> singleton{ REL::ID{ 908540, 2690147, 4797436 } };
-			return *singleton;
+			auto* cell = a_ref.parentCell;
+			if (!cell || !cell->IsInterior() || !RE::Workshop::IsWorkshopItem(a_ref))
+				return false;
+
+			auto* zone = cell->GetEncounterZone();
+			if (!zone || !zone->IsWorkshop())
+				return false;
+
+			a_ref.UpdateDynamicNavmesh(a_attached && !a_ref.IsDeleted() && !a_ref.IsDisabled());
+			return true;
 		}
 
-		void ForceUpdate()
+		static void QueueRebuild()
 		{
-			using func_t = decltype(&DynamicNavmesh::ForceUpdate);
-			static REL::Relocation<func_t> func{ REL::ID{ 854653, 2301428 } };
-			return func(this);
+			static std::atomic_bool queued{ false };
+			if (queued.exchange(true))
+				return;
+
+			F4SE::GetTaskInterface()->AddTask([] {
+				queued = false;
+				if (auto* navmesh = RE::DynamicNavmesh::GetSingleton())
+					navmesh->ForceUpdate();
+			});
 		}
-	};
 
-	inline void RegisterForCellAttachDetach(RE::BSTEventSink<RE::TESCellAttachDetachEvent>* a_sink)
-	{
-		using func_t = decltype(&RegisterForCellAttachDetach);
-		static REL::Relocation<func_t> func{ REL::ID{ 409767 } };
-		return func(a_sink);
-	}
-
-	// ---- Performance Counter ---- //
-
-	inline static bool PerfCounterFreqAcquired = false;
-	inline static double PerfCounterFreq = 0.0;
-
-	static void GetPerfCounterFreq()
-	{
-		if (!PerfCounterFreqAcquired)
+		class CellAttachDetachSink :
+			public RE::BSTEventSink<RE::TESCellAttachDetachEvent>
 		{
-			LARGE_INTEGER li;
-			if (QueryPerformanceFrequency(&li))
+		public:
+			[[nodiscard]] static CellAttachDetachSink* GetSingleton()
 			{
-				PerfCounterFreq = double(li.QuadPart) / 1000.0;
-				PerfCounterFreqAcquired = true;
+				static CellAttachDetachSink singleton;
+				return std::addressof(singleton);
 			}
-			else
+
+			RE::BSEventNotifyControl ProcessEvent(const RE::TESCellAttachDetachEvent& a_event,
+				RE::BSTEventSource<RE::TESCellAttachDetachEvent>*) override
 			{
-				REX::WARN("InteriorNavCut: QueryPerformanceFrequency failed!"sv);
+				if (auto* ref = a_event.refr.get(); ref && UpdateNavmeshCut(*ref, a_event.isAttaching))
+					QueueRebuild();
+
+				return RE::BSEventNotifyControl::kContinue;
 			}
-		}
-	}
+		};
 
-	static int64_t StartPerfCounter()
-	{
-		GetPerfCounterFreq();
-		LARGE_INTEGER li;
-		QueryPerformanceCounter(&li);
-		return li.QuadPart;
-	}
-
-	static double GetPerfCounterMS(int64_t& counter)
-	{
-		LARGE_INTEGER li;
-		QueryPerformanceCounter(&li);
-		auto result = (double(li.QuadPart - (counter)) / PerfCounterFreq);
-		counter = li.QuadPart;
-		return result;
-	}
-
-	// ---- Cell Attach / Detach ---- //
-
-	void DoUpdateNavmesh(RE::TESObjectREFR* refr, bool attaching)
-	{
-		if (refr->parentCell->cellFlags.any(RE::TESObjectCELL::Flag::kInterior) &&
-			IsWorkshopItem(refr))
+		// Loading a save re-adds the cuts of every saved interior workshop item.
+		static void ResetInteriorCuts()
 		{
-			if (auto enctZone = refr->parentCell->GetEncounterZone(); enctZone != nullptr && enctZone->IsWorkshop())
+			auto* dataHandler = RE::TESDataHandler::GetSingleton();
+			auto* player = RE::PlayerCharacter::GetSingleton();
+			if (!dataHandler || !player)
+				return;
+
+			bool changed = false;
+			for (auto* cell : dataHandler->interiorCells)
 			{
-				refr->UpdateDynamicNavmesh((refr->IsDeleted() || refr->IsDisabled()) ? false : attaching);
-			}
-		}
-	}
+				if (!cell)
+					continue;
 
-	class CellAttachDetachListener : public RE::BSTEventSink<RE::TESCellAttachDetachEvent>
-	{
-	public:
-		inline static std::atomic<bool> updateTaskQueued = false;
-
-		static CellAttachDetachListener* GetSingleton()
-		{
-			static CellAttachDetachListener instance;
-			return &instance;
-		}
-
-		virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESCellAttachDetachEvent& a_event, RE::BSTEventSource<RE::TESCellAttachDetachEvent>*) override
-		{
-			if (a_event.refr != nullptr && a_event.refr->parentCell != nullptr)
-			{
-				DoUpdateNavmesh(a_event.refr.get(), a_event.isAttaching);
-				if (!updateTaskQueued)
+				std::vector<RE::NiPointer<RE::TESObjectREFR>> refs;
 				{
-					updateTaskQueued = true;
-					F4SE::GetTaskInterface()->AddTask([]()
-						{
-						//auto perfTimer = StartPerfCounter();
-						DynamicNavmesh::GetSingleton()->ForceUpdate();
-						//always ends up being <1ms
-						//REX::INFO("Finished detach/attach update in {:.0f}ms", GetPerfCounterMS(perfTimer));
-						updateTaskQueued = false;
-						});
+					const RE::BSAutoLock lock{ cell->spinLock };
+					refs.assign(cell->references.begin(), cell->references.end());
+				}
+
+				const bool attached = cell == player->parentCell;
+				for (auto& ref : refs)
+				{
+					if (ref)
+						changed |= UpdateNavmeshCut(*ref, attached);
 				}
 			}
-			return RE::BSEventNotifyControl::kContinue;
+
+			if (changed)
+				QueueRebuild();
 		}
-	};
-
-	bool RegisterNavMeshUpdateListener()
-	{
-		if (!RELEX::IsRuntimeOG())
-		{
-			RE::TESCellAttachDetachEvent::GetEventSource()->RegisterSink(CellAttachDetachListener::GetSingleton());
-		}
-		else
-		{
-			RegisterForCellAttachDetach(CellAttachDetachListener::GetSingleton());
-		}
-
-		REX::INFO("InteriorNavCut: Registered Cell Attach / Detach Listener."sv);
-		return true;
-	}
-
-	// ---- Load Game ---- //
-
-	void HandleNavmeshUpdate(const RE::BSTTuple<const uint32_t, RE::TESForm*>& ele, const RE::TESObjectCELL* playerCell)
-	{
-		RE::TESObjectCELL* cell = ele.second->As<RE::TESObjectCELL>();
-
-		if (cell)
-		{
-			std::vector<RE::NiPointer<RE::TESObjectREFR>> refs;
-			cell->spinLock.lock();
-			auto& references = cell->references;
-
-			for (uint32_t i = 0; i < references.size(); i++)
-			{
-				refs.push_back(references[i]);
-			}
-			cell->spinLock.unlock();
-
-			for (auto& ref : refs)
-			{
-				if (ref != nullptr && ref->parentCell != nullptr)
-				{
-					DoUpdateNavmesh(ref.get(), ref->parentCell == playerCell);
-				}
-			}
-		}
-	}
-
-	bool ForceNavMeshUpdate()
-	{
-		auto perfTimer = StartPerfCounter();
-
-		auto playerCell = RE::PlayerCharacter::GetSingleton()->parentCell;
-		//REX::INFO("Player cell is: {:08X}", playerCell->formID);
-
-		const auto& [map, lock] = RE::TESForm::GetAllForms();
-		RE::BSAutoReadLock l{ lock };
-
-		if (!UserUseWine() && bAdditionalMultiThreading.GetValue() == true)
-		{
-			concurrency::parallel_for_each(map->begin(), map->end(), [&](RE::BSTTuple<const uint32_t, RE::TESForm*> ele) { HandleNavmeshUpdate(ele, playerCell); });
-		}
-		else
-		{
-			for (const RE::BSTTuple<const uint32_t, RE::TESForm*>& ele : *map)
-			{
-				HandleNavmeshUpdate(ele, playerCell);
-			}
-		}
-
-		DynamicNavmesh::GetSingleton()->ForceUpdate();
-
-#if !AD_NOMESSAGE_INTERIORNAVCUT
-		REX::INFO("InteriorNavCut: Finished Load-Time Navmesh Updates in {:.0f}ms"sv, GetPerfCounterMS(perfTimer));
-#endif
-		return true;
 	}
 
 	ModuleInteriorNavCut::ModuleInteriorNavCut() :
@@ -224,15 +113,7 @@ namespace Addictol
 	bool ModuleInteriorNavCut::DoInstall([[maybe_unused]] F4SE::MessagingInterface::Message* a_msg) noexcept
 	{
 		if (a_msg && a_msg->type == F4SE::MessagingInterface::kGameDataReady)
-		{
-			if (UserUseWine())
-			{
-				REX::INFO("InteriorNavCut: Wine detected, disabling InteriorNavCut's Multi-Threading..."sv);
-			}
-
-			REX::INFO("InteriorNavCut: Registering NavMesh Update Listener."sv);
-			RegisterNavMeshUpdateListener();
-		}
+			RE::TESCellAttachDetachEvent::GetEventSource()->RegisterSink(interiorNavCutDetail::CellAttachDetachSink::GetSingleton());
 
 		return true;
 	}
@@ -240,12 +121,7 @@ namespace Addictol
 	bool ModuleInteriorNavCut::DoListener([[maybe_unused]] F4SE::MessagingInterface::Message* a_msg) noexcept
 	{
 		if (a_msg && a_msg->type == F4SE::MessagingInterface::kPostLoadGame)
-		{
-#if !AD_NOMESSAGE_INTERIORNAVCUT
-			REX::INFO("InteriorNavCut: Forcing NavMesh Update."sv);
-#endif
-			ForceNavMeshUpdate();
-		}
+			interiorNavCutDetail::ResetInteriorCuts();
 
 		return true;
 	}

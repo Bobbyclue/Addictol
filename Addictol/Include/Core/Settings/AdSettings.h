@@ -119,7 +119,6 @@ namespace Addictol
 	extern StrSetting sAdditionalLogFlushLevel;
 	extern U32Setting uAdditionalScaleformPageSize;
 	extern U32Setting uAdditionalScaleformHeapSize;
-	extern BoolSetting bAdditionalMultiThreading;
 	extern BoolSetting bAdditionalFullPrecisionDecalsEffectShaders;
 	extern I32Setting nAdditionalMaxPapyrusOpsPerFrame;
 	extern BoolSetting bAdditionalIgnorePreInstallBias;

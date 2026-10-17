@@ -9,9 +9,6 @@ namespace Addictol
 	// Runtime enables re-arm the cell LOD fade gate, flashing its object LOD.
 	namespace lodDistanceDetail
 	{
-		constexpr REL::ID s_incQueuedDistantRefCount{ 519873, 2200423 };
-		constexpr REL::ID s_decQueuedDistantRefCount{ 865141, 2200424 };
-
 		constexpr size_t s_incArmOffset = 0x64;
 		constexpr size_t s_decStoreOffset = 0xBB;
 
@@ -45,8 +42,8 @@ namespace Addictol
 	{
 		using namespace lodDistanceDetail;
 
-		const auto arm = s_incQueuedDistantRefCount.address() + s_incArmOffset;
-		const auto store = s_decQueuedDistantRefCount.address() + s_decStoreOffset;
+		const auto arm = REL::Relocation<uintptr_t>{ RE::ID::TESObjectCELL::IncQueuedDistantRefCount, s_incArmOffset }.address();
+		const auto store = REL::Relocation<uintptr_t>{ RE::ID::TESObjectCELL::DecQueuedDistantRefCount, s_decStoreOffset }.address();
 
 		// mov eax, 0FFFFFFFFh; mov [rcx+1F8h], rax
 		if (!RELEX::Validate(arm, { 0xB8, 0xFF, 0xFF, 0xFF, 0xFF, 0x48, 0x89, 0x81, 0xF8, 0x01, 0x00, 0x00 }))
