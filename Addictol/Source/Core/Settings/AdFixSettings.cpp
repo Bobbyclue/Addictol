@@ -419,6 +419,15 @@ namespace Addictol
 		SettingApplyTiming::kNextLaunch
 	};
 
+	BoolSetting bFixesEffectEnvMapCrash{
+		"Fixes"sv,
+		"bEffectEnvMapCrash"sv,
+		SettingDisplayCategory::kStability,
+		true,
+		"Fixes a crash when an effect shader material has environment mapping enabled but no environment texture."sv,
+		SettingApplyTiming::kNextLaunch
+	};
+
 	BoolSetting bFixesAttachLightCrash{
 		"Fixes"sv,
 		"bAttachLightCrash"sv,

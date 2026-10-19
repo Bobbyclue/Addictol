@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added the "Effect Env Map Crash" module.
 - LightOrder: Fixed previs discarding object light lists, which left glass and other objects lit only by the sun. Ported from doodlum's Lighting Fixes.
 - LightPriority: Fixed objects lit by more than four lights receiving the four weakest instead of the four strongest. Ported from doodlum's Lighting Fixes.
 - QuestLogBloat: Repeatable quest stages no longer add duplicate quest log entries, and saves already bloated by them load without freezing.
