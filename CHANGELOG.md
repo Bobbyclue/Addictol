@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ControlSamplers: Mip bias now applies only to the engine's material samplers, fixing incorrect results in other plugins' effects (e.g. Community Shaders Volumetric Shadows) and engine reflections.
 - Added the "Effect Env Map Crash" module.
 - LightOrder: Fixed previs discarding object light lists, which left glass and other objects lit only by the sun. Ported from doodlum's Lighting Fixes.
 - LightPriority: Fixed objects lit by more than four lights receiving the four weakest instead of the four strongest. Ported from doodlum's Lighting Fixes.

@@ -97,15 +97,6 @@ namespace Addictol
 		SettingApplyTiming::kNextLaunch
 	};
 
-	BoolSetting bAdditionalIgnorePreInstallBias{
-		"Additional"sv,
-		"bIgnorePreInstallBias"sv,
-		SettingDisplayCategory::kVisuals,
-		false,
-		"Ignore the previously preset value for texture quality distance, if this sets as false, should hopefully reduce the chance of causing rendering errors."sv,
-		SettingApplyTiming::kNextLaunch
-	};
-
 	I32Setting nAdditionalBloomScale{
 		"Additional"sv,
 		"nBloomScale"sv,

@@ -605,9 +605,6 @@
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleCompanionStrayBullet.h">
       <Filter>Include\Modules\C</Filter>
     </ClInclude>
-    <ClInclude Include="..\Addictol\Include\Modules\AdControlSamplerCache.h">
-      <Filter>Include\Modules\C</Filter>
-    </ClInclude>
     <ClInclude Include="..\Addictol\Include\Modules\AdModuleControlSamplers.h">
       <Filter>Include\Modules\C</Filter>
     </ClInclude>
