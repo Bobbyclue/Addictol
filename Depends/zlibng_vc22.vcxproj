@@ -76,15 +76,42 @@
     <ClCompile Include="zlib-ng\arch\x86\chorba_sse41.c" />
     <ClCompile Include="zlib-ng\arch\x86\adler32_sse42.c" />
     <ClCompile Include="zlib-ng\arch\x86\crc32_pclmulqdq.c" />
-    <ClCompile Include="zlib-ng\arch\x86\slide_hash_avx2.c;zlib-ng\arch\x86\chunkset_avx2.c;zlib-ng\arch\x86\compare256_avx2.c;zlib-ng\arch\x86\adler32_avx2.c">
+    <!-- AVX2 Optimized Files -->
+    <ClCompile Include="zlib-ng\arch\x86\slide_hash_avx2.c">
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
-    <ClCompile Include="zlib-ng\arch\x86\adler32_avx512.c;zlib-ng\arch\x86\chunkset_avx512.c;zlib-ng\arch\x86\compare256_avx512.c;zlib-ng\arch\x86\adler32_avx512_vnni.c;zlib-ng\arch\x86\crc32_vpclmulqdq.c">
+    <ClCompile Include="zlib-ng\arch\x86\chunkset_avx2.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\compare256_avx2.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\adler32_avx2.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    
+    <!-- AVX512 Optimized Files -->
+    <ClCompile Include="zlib-ng\arch\x86\adler32_avx512.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\chunkset_avx512.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\compare256_avx512.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\adler32_avx512_vnni.c">
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="zlib-ng\arch\x86\crc32_vpclmulqdq.c">
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="zlibng-config\*.h" />
+    <ClInclude Include="zlibng-config\gzread_mangle.h" />
+    <ClInclude Include="zlibng-config\zconf-ng.h" />
+    <ClInclude Include="zlibng-config\zlib_name_mangling-ng.h" />
+    <ClInclude Include="zlibng-config\zlib-ng.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
